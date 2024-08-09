@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ThemeProvider } from 'styled-components';
 
 function Button({name, icon, onClick, bg, bPad, color, bRad}) {
     return (
@@ -22,10 +23,31 @@ const ButtonStyled = styled.button`
     font-size: inherit;
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
     cursor: pointer;
-    transition: all .4s ease-in-out;
-`;
+    transition: all 0.4s ease-in-out;
+    background: ${({ theme }) => theme.buttonBackground || '#007bff'};
+    color: ${({ theme }) => theme.buttonColor || '#fff'};
+    padding: ${({ theme }) => theme.buttonPadding || '10px 20px'};
+    border-radius: ${({ theme }) => theme.buttonBorderRadius || '4px'};
 
+    &:hover {
+        opacity: 0.8;
+    }
+`;
+const theme = {
+    buttonBackground: '#007bff',
+    buttonColor: '#fff',
+    buttonPadding: '10px 20px',
+    buttonBorderRadius: '4px',
+};
+
+function App() {
+    return (
+        <ThemeProvider theme={theme}>
+            <Button onClick={() => console.log('Clicked!')}>Click Me</Button>
+        </ThemeProvider>
+    );
+}
 
 export default Button

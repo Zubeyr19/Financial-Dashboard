@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import avatar from '../../img/avatar.jpg';
-import {signout} from '../../utils/Icons';
-import {menuItems} from '../../utils/menuItems';
+import avatar from '../../Utilities/img/avatar.jpg';
+import {signout} from '../../Utilities/utils/Icons';
+import {menuItems} from '../../Utilities/utils/menuItems';
 
 function Navigation({ active, setActive }) {
     return (

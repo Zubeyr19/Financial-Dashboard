@@ -1,7 +1,8 @@
-import React, {useEffect, useMemo, useState} from 'react'
+
+  import React, {useEffect, useMemo, useState} from 'react'
 import styled from 'styled-components'
-import {useGlobalContext} from '../../context/globalContext';
-import {InnerLayout} from '../../styles/Layouts';
+import {useGlobalContext} from '../../Services/context/globalContext';
+import {InnerLayout} from '../../Utilities/styles/Layouts';
 import Form from '../Form/Form';
 import IncomeItem from '../IncomeItem/IncomeItem';
 

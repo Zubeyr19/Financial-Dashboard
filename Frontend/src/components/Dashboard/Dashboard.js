@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {useGlobalContext} from '../../context/globalContext';
-import History from '../../History/History';
-import {InnerLayout} from '../../styles/Layouts';
-import {dollar} from '../../utils/Icons';
+import {useGlobalContext} from '../../Services/context/globalContext';
+import History from '../../Services/History/History';
+import {InnerLayout} from '../../Utilities/styles/Layouts';
+import {dollar} from '../../Utilities/utils/Icons';
 import Chart from '../Chart/Chart';
 
 function Dashboard() {
