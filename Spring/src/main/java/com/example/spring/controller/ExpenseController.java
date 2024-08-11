@@ -1,9 +1,9 @@
 package com.example.spring.controller;
 
 import com.example.spring.model.Expense;
-
+import com.example.spring.services.LoggingService;
 import com.example.spring.services.ExpenseService;
-import com.example.spring.repository.ExpenseRepository;
+import com.example.spring.factory.ExpenseServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,13 @@ import java.util.List;
 @RequestMapping("/api/v1/expenses")
 public class ExpenseController {
 
-    @Autowired
-    private ExpenseRepository expenseRepository;
+    private final ExpenseService expenseService;
 
+    @Autowired
+    public ExpenseController(ExpenseServiceFactory expenseServiceFactory, LoggingService loggingService) {
+        this.expenseService = expenseServiceFactory.createExpenseService("basic");
+        this.expenseService.registerObserver(loggingService);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<?> addExpense(@RequestBody Expense expense) {
@@ -28,19 +32,23 @@ public class ExpenseController {
             return ResponseEntity.badRequest().body("Amount must be a positive number!");
         }
 
+        // Use the expense service to add the expense, triggering any observers
+        expenseService.addExpense(expense);
 
         return ResponseEntity.ok("Expense Added");
     }
 
     @GetMapping("/all")
     public List<Expense> getExpenses() {
-        return expenseRepository.findAll();
+        // Use the expense service to retrieve all expenses
+        return expenseService.getAllExpenses();
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteExpense(@PathVariable String id) {
-        expenseRepository.deleteById(id);
+        // Use the expense service to delete the expense, triggering any observers
+        expenseService.deleteExpense(id);
+
         return ResponseEntity.ok("Expense Deleted");
     }
-
 }
