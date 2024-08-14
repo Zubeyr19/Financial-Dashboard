@@ -23,29 +23,39 @@ public class BasicExpenseService implements ExpenseService, Subject {
 
     @Override
     public void addExpense(Expense expense) {
-        // Save the expense to the repository
-        expenseRepository.save(expense);
-        // Notify observers after adding the expense
-        notifyObservers("Expense added: " + expense.getTitle());
+
+        if (isValidExpense(expense)) {
+            expenseRepository.save(expense);
+            // Notify observers after adding the expense
+            notifyObservers("Basic processing: Expense added with title: " + expense.getTitle());
+        } else {
+            throw new IllegalArgumentException("Invalid expense details");
+        }
     }
 
     @Override
     public List<Expense> getAllExpenses() {
-        // Return all expenses directly from the repository
+
         return expenseRepository.findAll();
     }
 
     @Override
     public void deleteExpense(String id) {
-        // Delete expense by ID
+        // Basic deletion logic: Directly delete the expense by ID
         expenseRepository.deleteById(id);
         // Notify observers after deleting the expense
-        notifyObservers("Expense deleted with ID: " + id);
+        notifyObservers("Basic processing: Expense deleted with ID: " + id);
     }
 
     @Override
     public void processExpense(Expense expense) {
-        // If you have additional processing logic, add it here
+
+        addExpense(expense);
+    }
+
+    private boolean isValidExpense(Expense expense) {
+
+        return expense.getAmount() > 0 && expense.getDate() != null;
     }
 
     @Override

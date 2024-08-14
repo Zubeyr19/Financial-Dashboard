@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
 
 import static org.mockito.Mockito.*;
 
-class ExpenseAddedListenerTest {
+public class ExpenseAddedListenerTest {
 
     private ExpenseAddedListener expenseAddedListener;
     private NotificationService notificationService;

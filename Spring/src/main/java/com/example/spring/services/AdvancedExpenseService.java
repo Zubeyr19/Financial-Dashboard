@@ -18,8 +18,10 @@ public class AdvancedExpenseService implements ExpenseService {
     public void addExpense(Expense expense) {
         // Advanced processing logic
         if (isValidExpense(expense)) {
-            expense.setAmount(expense.getAmount() * 1.1); // Example transformation: add 10% extra
+            // Apply a business rule: add 10% extra to the amount as a processing fee or tax
+            expense.setAmount(expense.getAmount() * 1.1);
             expenseRepository.save(expense);
+            notifyObservers("Advanced processing: Expense added with title: " + expense.getTitle());
         } else {
             throw new IllegalArgumentException("Invalid expense details");
         }
@@ -27,39 +29,40 @@ public class AdvancedExpenseService implements ExpenseService {
 
     @Override
     public List<Expense> getAllExpenses() {
-        // Return all expenses directly from the repository
+        // Potentially add filtering or sorting logic if needed
         return expenseRepository.findAll();
     }
 
     @Override
     public void deleteExpense(String id) {
-        // Advanced deletion logic, e.g., logging
-        System.out.println("Deleting expense with ID: " + id);
+
+        System.out.println("Advanced processing: Deleting expense with ID: " + id);
         expenseRepository.deleteById(id);
+        notifyObservers("Advanced processing: Expense deleted with ID: " + id);
     }
 
     @Override
     public void processExpense(Expense expense) {
-
+        addExpense(expense);
     }
 
     private boolean isValidExpense(Expense expense) {
-        // Example validation logic
+
         return expense.getAmount() > 0 && expense.getDate() != null;
     }
 
     @Override
     public void registerObserver(Observer observer) {
-
+        // Register observers if needed
     }
 
     @Override
     public void unregisterObserver(Observer observer) {
-
+        // Unregister observers if needed
     }
 
     @Override
     public void notifyObservers(String message) {
-
+        // Notify observers if there are any registered
     }
 }
